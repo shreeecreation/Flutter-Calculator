@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:scientific_calculato/src/core/providers/expression_provider.dart';
 
 import 'src/app/homepage/homepage_screen.dart';
+import 'src/core/providers/result_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,10 +14,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: Colors.blue, brightness: Brightness.dark),
-      home: const HomepageScreen(),
-    );
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: ((context) {
+            return ExpressionProvider();
+          })),
+          ChangeNotifierProvider(create: ((context) {
+            return ResultProvider();
+          }))
+        ],
+        child: MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(primarySwatch: Colors.blue, brightness: Brightness.dark),
+          home: HomepageScreen(),
+        ));
   }
 }
