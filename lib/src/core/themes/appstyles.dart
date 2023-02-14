@@ -205,10 +205,18 @@ abstract class AppStyles {
   );
 
   //medium
-  static TextStyle text20PxMedium = GoogleFonts.lato(
-    fontSize: 20.sp,
+  static TextStyle text30PxBold = GoogleFonts.lato(
+    fontSize: 30.sp,
     fontWeight: FontWeight.w500,
-    height: calculateHeight(24, 20),
+    height: calculateHeight(28, 22),
+    fontStyle: FontStyle.normal,
+  );
+
+  //medium
+  static TextStyle text31PxBold = GoogleFonts.lato(
+    fontSize: 31.sp,
+    fontWeight: FontWeight.w500,
+    height: calculateHeight(28, 26),
     fontStyle: FontStyle.normal,
   );
 
@@ -260,10 +268,63 @@ abstract class AppStyles {
     fontStyle: FontStyle.normal,
   );
 
+  // text 32px
+  //regular
+  static TextStyle text32Px = GoogleFonts.lato(
+    fontSize: 32.sp,
+    height: calculateHeight(43, 36),
+    fontStyle: FontStyle.normal,
+    letterSpacing: calculateSpacing(-0.02),
+  );
+
+  //medium
+  static TextStyle text32PxMedium = GoogleFonts.lato(
+    fontSize: 32.sp,
+    fontWeight: FontWeight.w500,
+    height: calculateHeight(43, 36),
+    fontStyle: FontStyle.normal,
+    letterSpacing: calculateSpacing(-0.02),
+  );
+
+  // text 34px
+  //regular
+  static TextStyle text34Px = GoogleFonts.lato(
+    fontSize: 34.sp,
+    height: calculateHeight(43, 36),
+    fontStyle: FontStyle.normal,
+    letterSpacing: calculateSpacing(-0.02),
+  );
+
+  //medium
+  static TextStyle text34PxMedium = GoogleFonts.lato(
+    fontSize: 34.sp,
+    fontWeight: FontWeight.w500,
+    height: calculateHeight(43, 36),
+    fontStyle: FontStyle.normal,
+    letterSpacing: calculateSpacing(-0.02),
+  );
+
+  //SemiBold
+  static TextStyle text34PxSemiBold = GoogleFonts.lato(
+    fontSize: 34.sp,
+    fontWeight: FontWeight.w600,
+    height: calculateHeight(43, 36),
+    fontStyle: FontStyle.normal,
+    letterSpacing: calculateSpacing(-0.02),
+  );
+
+  //bold
+  static TextStyle text34PxBold = GoogleFonts.lato(
+    fontSize: 34.sp,
+    fontWeight: FontWeight.bold,
+    height: calculateHeight(43, 36),
+    fontStyle: FontStyle.normal,
+    letterSpacing: calculateSpacing(-0.02),
+  );
   // text 36px
   //regular
   static TextStyle text36Px = GoogleFonts.lato(
-    fontSize: 36.sp,
+    fontSize: 34.sp,
     height: calculateHeight(43, 36),
     fontStyle: FontStyle.normal,
     letterSpacing: calculateSpacing(-0.02),

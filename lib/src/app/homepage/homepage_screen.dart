@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:scientific_calculato/src/core/themes/appstyles.dart';
+import 'package:provider/provider.dart';
+import 'package:scientific_calculato/src/app/buttongrid/button_grid.dart';
+import 'package:scientific_calculato/src/core/providers/result_provider.dart';
 
 class HomepageScreen extends StatelessWidget {
-  const HomepageScreen({super.key});
+  HomepageScreen({super.key});
 
+  static final TextEditingController result = TextEditingController(text: "0");
+  final TextEditingController expression = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var elevatedButtonStyle = ElevatedButton.styleFrom(backgroundColor: Colors.transparent, elevation: 0);
@@ -11,125 +15,53 @@ class HomepageScreen extends StatelessWidget {
         body: Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text("0", style: AppStyles.text24Px),
-              const SizedBox(width: 40),
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 30,
+                child: TextFormField(
+                  readOnly: true,
+                  maxLength: 30,
+                  decoration: const InputDecoration(border: InputBorder.none, counterText: ""),
+                  textAlign: TextAlign.right,
+                  style: Provider.of<ResultProvider>(context, listen: true).getExpressionFont,
+                  controller: expression,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 30,
+                width: MediaQuery.of(context).size.width - 30,
+                child: TextFormField(
+                  readOnly: true,
+                  decoration: const InputDecoration(border: InputBorder.none),
+                  textAlign: TextAlign.right,
+                  style: Provider.of<ResultProvider>(context, listen: true).getResultFont,
+                  controller: result,
+                ),
+              )
             ],
           ),
           const Divider(),
           //First Row "C" "Wrong" "Percent" "Divide"
-          rowFirst(elevatedButtonStyle),
+          ButtonGrid.rowFirst(elevatedButtonStyle, context, expression, result),
           //First Row "7" "8" "9" "multiply"
-          rowSecond(elevatedButtonStyle),
+          ButtonGrid.rowSecond(elevatedButtonStyle, context, expression, result),
           //First Row "4" "5" "6" "minus"
-          rowThird(elevatedButtonStyle),
+          ButtonGrid.rowThird(elevatedButtonStyle, context, expression, result),
           //First Row "1" "2" "3" "Divide"
-          rowFourth(elevatedButtonStyle),
+          ButtonGrid.rowFourth(elevatedButtonStyle, context, expression, result),
           //First Row "" "0" "." "equals"
-          rowFifth(elevatedButtonStyle),
+          ButtonGrid.rowFifth(elevatedButtonStyle, context, expression, result),
         ],
       ),
     ));
   }
-}
-
-Row rowFirst(ButtonStyle elevatedBUttonStyle) {
-  return Row(
-    children: [
-      Expanded(
-          child: SizedBox(
-              height: 80, child: ElevatedButton(onPressed: () {}, style: elevatedBUttonStyle, child: Text("C", style: AppStyles.text18PxMedium)))),
-      Expanded(child: SizedBox(height: 80, child: ElevatedButton(onPressed: () {}, style: elevatedBUttonStyle, child: const Icon(Icons.backspace)))),
-      Expanded(
-          child: SizedBox(
-              height: 80, child: ElevatedButton(onPressed: () {}, style: elevatedBUttonStyle, child: Text("%", style: AppStyles.text18PxMedium)))),
-      Expanded(
-          child: SizedBox(
-              height: 80, child: ElevatedButton(onPressed: () {}, style: elevatedBUttonStyle, child: Text("/", style: AppStyles.text18PxMedium))))
-    ],
-  );
-}
-
-Row rowSecond(ButtonStyle elevatedBUttonStyle) {
-  return Row(
-    children: [
-      Expanded(
-          child: SizedBox(
-              height: 80, child: ElevatedButton(onPressed: () {}, style: elevatedBUttonStyle, child: Text("7", style: AppStyles.text18PxMedium)))),
-      Expanded(
-          child: SizedBox(
-              height: 80, child: ElevatedButton(onPressed: () {}, style: elevatedBUttonStyle, child: Text("8", style: AppStyles.text18PxMedium)))),
-      Expanded(
-          child: SizedBox(
-              height: 80, child: ElevatedButton(onPressed: () {}, style: elevatedBUttonStyle, child: Text("9", style: AppStyles.text18PxMedium)))),
-      Expanded(
-          child: SizedBox(
-              height: 80, child: ElevatedButton(onPressed: () {}, style: elevatedBUttonStyle, child: Text("X", style: AppStyles.text18PxMedium))))
-    ],
-  );
-}
-
-Row rowThird(ButtonStyle elevatedBUttonStyle) {
-  return Row(
-    children: [
-      Expanded(
-          child: SizedBox(
-              height: 80, child: ElevatedButton(onPressed: () {}, style: elevatedBUttonStyle, child: Text("4", style: AppStyles.text18PxMedium)))),
-      Expanded(
-          child: SizedBox(
-              height: 80, child: ElevatedButton(onPressed: () {}, style: elevatedBUttonStyle, child: Text("5", style: AppStyles.text18PxMedium)))),
-      Expanded(
-          child: SizedBox(
-              height: 80, child: ElevatedButton(onPressed: () {}, style: elevatedBUttonStyle, child: Text("6", style: AppStyles.text18PxMedium)))),
-      Expanded(
-          child: SizedBox(
-              height: 80, child: ElevatedButton(onPressed: () {}, style: elevatedBUttonStyle, child: Text("-", style: AppStyles.text18PxMedium))))
-    ],
-  );
-}
-
-Row rowFourth(ButtonStyle elevatedBUttonStyle) {
-  return Row(
-    children: [
-      Expanded(
-          child: SizedBox(
-              height: 80, child: ElevatedButton(onPressed: () {}, style: elevatedBUttonStyle, child: Text("1", style: AppStyles.text18PxMedium)))),
-      Expanded(
-          child: SizedBox(
-              height: 80, child: ElevatedButton(onPressed: () {}, style: elevatedBUttonStyle, child: Text("2", style: AppStyles.text18PxMedium)))),
-      Expanded(
-          child: SizedBox(
-              height: 80, child: ElevatedButton(onPressed: () {}, style: elevatedBUttonStyle, child: Text("3", style: AppStyles.text18PxMedium)))),
-      Expanded(
-          child: SizedBox(
-              height: 80, child: ElevatedButton(onPressed: () {}, style: elevatedBUttonStyle, child: Text("+", style: AppStyles.text18PxMedium))))
-    ],
-  );
-}
-
-Row rowFifth(ButtonStyle elevatedBUttonStyle) {
-  return Row(
-    children: [
-      Expanded(
-          child: SizedBox(
-              height: 80, child: ElevatedButton(onPressed: () {}, style: elevatedBUttonStyle, child: Text("1", style: AppStyles.text18PxMedium)))),
-      Expanded(
-          child: SizedBox(
-              height: 80, child: ElevatedButton(onPressed: () {}, style: elevatedBUttonStyle, child: Text("0", style: AppStyles.text18PxMedium)))),
-      Expanded(
-          child: SizedBox(
-              height: 80, child: ElevatedButton(onPressed: () {}, style: elevatedBUttonStyle, child: Text(".", style: AppStyles.text18PxMedium)))),
-      Expanded(
-          child: SizedBox(
-              height: 80,
-              child: ElevatedButton(
-                  onPressed: () {},
-                  style: elevatedBUttonStyle,
-                  child: ElevatedButton(onPressed: () {}, style: elevatedBUttonStyle, child: const Icon(Icons.dehaze)))))
-    ],
-  );
 }
