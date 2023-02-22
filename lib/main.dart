@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scientific_calculato/src/core/providers/expression_provider.dart';
+import 'package:scientific_calculato/src/core/providers/extrabutton_provider.dart';
+import 'package:scientific_calculato/src/core/providers/history_provider.dart';
 
 import 'src/app/homepage/homepage_screen.dart';
 import 'src/core/providers/result_provider.dart';
@@ -21,9 +23,16 @@ class MyApp extends StatelessWidget {
           })),
           ChangeNotifierProvider(create: ((context) {
             return ResultProvider();
+          })),
+          ChangeNotifierProvider(create: ((context) {
+            return HistoryProvider();
+          })),
+          ChangeNotifierProvider(create: ((context) {
+            return ExtrabuttonProvider();
           }))
         ],
         child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: ThemeData(primarySwatch: Colors.blue, brightness: Brightness.dark),
           home: HomepageScreen(),
