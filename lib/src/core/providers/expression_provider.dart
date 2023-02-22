@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scientific_calculato/src/app/buttongrid/domain/result_manager.dart';
-
+import 'package:scientific_calculato/src/core/providers/history_provider.dart';
 import 'result_provider.dart';
 
 class ExpressionProvider extends ChangeNotifier {
@@ -11,40 +11,100 @@ class ExpressionProvider extends ChangeNotifier {
     return _expression;
   }
 
-  void updateExpression(dynamic value, dynamic controller, context, resultController) {
-    var isEqualbuttonPressed = Provider.of<ResultProvider>(context, listen: false).isEqualPressed;
-    var controllerText = Provider.of<ResultProvider>(context, listen: false).getResult;
+  void updateExpression(dynamic value, dynamic controller, context, resultController, isEqualbuttonPressed) {
+    var resultText = Provider.of<ResultProvider>(context, listen: false).getResult;
+    List operators = ["+", "-", "/", "*"];
 
-    if (isEqualbuttonPressed) {
-      if (value.endsWith("/") || value.endsWith("*") || value.endsWith("+") || value.endsWith("-")) {
-        var finalControllerText = controllerText.substring(2);
-        var operator = value.substring(value.length - 1);
-        controller.text = "$finalControllerText$operator";
-        Provider.of<ResultProvider>(context, listen: false).updateResultSimple(finalControllerText);
+    //If user presssed any operator before pressing button
+    if (_expression.isEmpty) {
+      for (int i = 0; i < operators.length; i++) {
+        if (value == operators[i]) {
+          controller.text = "0$value";
+          _expression = controller.text;
+          Provider.of<ResultProvider>(context, listen: false).updateResultSimple("0");
+        }
+      }
+    }
+
+    // If % button is pressed while not any operator is pressed
+
+    if (value == "%" && !_expression.contains("/") && !_expression.contains("*") && !_expression.contains("+") && !_expression.contains("-")) {
+      String percentExpression = controller.text;
+      var finalPercentExpression = int.parse(percentExpression);
+      var finalAnswer = finalPercentExpression / 100;
+      var controllerAnswer = finalAnswer.toString();
+      controller.text = controllerAnswer.substring(0, controllerAnswer.length);
+      _expression = controller.text;
+    } else {
+      if (value == "%") {
+        if (_expression.contains("/") || _expression.contains("*") || _expression.contains("+") || _expression.contains("-")) {
+          return;
+        }
       } else {
-        for (var i = 0; i < ResultManager.numbers.length; i++) {
-          if (value.endsWith(ResultManager.numbers[i])) {
-            controller.text = ResultManager.numbers[i];
-            resultController.text = ResultManager.numbers[i];
-            Provider.of<ResultProvider>(context, listen: false).updateResultSimple(ResultManager.numbers[i]);
+        //If equal button is pressed for knowing the answer
+
+        if (isEqualbuttonPressed) {
+          //If result is in Infinity mode
+
+          if (resultController.text == " = Infinity" || resultController.text == " = NaN") {
+            for (int i = 0; i < operators.length; i++) {
+              if (value == operators[i]) {
+                controller.text = "0$value";
+                _expression = controller.text;
+                Provider.of<ResultProvider>(context, listen: false).updateResultSimple("0");
+              }
+            }
+          } else {
+            if (value.endsWith("/") || value.endsWith("*") || value.endsWith("+") || value.endsWith("-")) {
+              var finalControllerText = resultText.substring(2);
+              Provider.of<HistoryProvider>(context, listen: false).addHistory(
+                {"exp": _expression, "result": finalControllerText},
+              );
+              Provider.of<ResultProvider>(context, listen: false).updateResultSimple(finalControllerText);
+
+              controller.text = "$finalControllerText$value";
+              _expression = controller.text;
+            }
+            //If equal button is pressed and number was pressed
+
+            else {
+              var finalControllerText = resultText.substring(2);
+
+              for (var i = 0; i < ResultManager.numbers.length; i++) {
+                if (value.endsWith(ResultManager.numbers[i])) {
+                  Provider.of<HistoryProvider>(context, listen: false).addHistory(
+                    {"exp": _expression, "result": finalControllerText},
+                  );
+                  controller.text = ResultManager.numbers[i];
+                  _expression = controller.text;
+
+                  resultController.text = ResultManager.numbers[i];
+                  Provider.of<ResultProvider>(context, listen: false).updateResultSimple(ResultManager.numbers[i]);
+                }
+              }
+              //If equal button is pressed and operator was pressed
+            }
+          }
+        } else {
+          // If user tried to press double operator
+          if (value.endsWith("/") || value.endsWith("*") || value.endsWith("+") || value.endsWith("-")) {
+            if (_expression.endsWith("/") || _expression.endsWith("*") || _expression.endsWith("+") || _expression.endsWith("-")) {
+              controller.text = controller.text.substring(0, controller.text.length - 1);
+              _expression = controller.text;
+            }
+          }
+          if (_expression.length >= 40) {
+            _expression = _expression;
+          } else {
+            controller.text = controller.text + value;
+            _expression = controller.text;
+            ResultManager.resultManagerNormalButton(context, controller, resultController);
           }
         }
       }
-    } else {
-      if (value.endsWith("/") || value.endsWith("*") || value.endsWith("+") || value.endsWith("-")) {
-        if (_expression.endsWith("/") || _expression.endsWith("*") || _expression.endsWith("+") || _expression.endsWith("-")) {
-          controller.text = controller.text.substring(0, controller.text.length - 1);
-          _expression = controller.text;
-        }
-      }
-      if (_expression.length >= 30) {
-        _expression = _expression;
-      } else {
-        controller.text = controller.text + value;
-        _expression = controller.text;
-      }
+
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   void resetExpression(expressionController, resultController) {

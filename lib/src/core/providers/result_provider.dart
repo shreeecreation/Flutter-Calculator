@@ -6,13 +6,13 @@ class ResultProvider extends ChangeNotifier {
   var _resultFont = const TextStyle();
   var _isEqualPressed = false;
 
-  TextStyle simpleButtonPressedExpression = const TextStyle(fontSize: 29, color: Colors.white);
+  TextStyle simpleButtonPressedExpression = const TextStyle(fontSize: 26, color: Colors.white);
 
   TextStyle simpleButtonPressedResult = const TextStyle(fontSize: 20, color: Colors.grey);
 
   TextStyle equalButtonPressedExpression = const TextStyle(fontSize: 20, color: Colors.grey);
 
-  TextStyle equalButtonPressedResult = const TextStyle(fontSize: 29, color: Colors.white);
+  TextStyle equalButtonPressedResult = const TextStyle(fontSize: 26, color: Colors.white);
 
   String get getResult {
     return _result;
@@ -49,6 +49,11 @@ class ResultProvider extends ChangeNotifier {
   void makeResultNull() {
     _result = "0";
 
+    notifyListeners();
+  }
+
+  void makeEqualPressedButtonOff() {
+    _isEqualPressed = false;
     notifyListeners();
   }
 }
