@@ -12,222 +12,260 @@ class ButtonGrid {
   static List numbers = ["9", "8", "7", "6", "5", "4", "3", "2", "1", ".", "0"];
   static List operators = ["/", "*", "-", "+", "%"];
 
-  static Widget rowFirst(ButtonStyle elevatedBUttonStyle, context, expressionController, resultExpression, isEqualbuttonPressed) {
+  static double boxHeight = 80;
+
+  static Widget rowFirst(functionModel) {
     return Row(
       children: [
         Expanded(
             child: GestureDetector(
           onDoubleTap: () {
-            Provider.of<ExpressionProvider>(context, listen: false).resetExpression(expressionController, resultExpression);
+            Provider.of<ExpressionProvider>(functionModel.context, listen: false)
+                .resetExpression(functionModel.expressionController, functionModel.resultExpression);
 
-            Provider.of<HistoryProvider>(context, listen: false).clearHistory();
+            Provider.of<HistoryProvider>(functionModel.context, listen: false).clearHistory();
           },
           onTap: () {
-            Provider.of<ExpressionProvider>(context, listen: false).resetExpression(expressionController, resultExpression);
+            Provider.of<ExpressionProvider>(functionModel.context, listen: false)
+                .resetExpression(functionModel.expressionController, functionModel.resultExpression);
           },
-          child: SizedBox(height: 80, child: Center(child: Text("C", style: AppStyles.text31PxBold.primary))),
+          child: SizedBox(height: boxHeight, child: Center(child: Text("C", style: AppStyles.text31PxBold.primary))),
         )),
         Expanded(
             child: SizedBox(
-                height: 80,
+                height: boxHeight,
                 child: ElevatedButton(
                     onPressed: () {
-                      Provider.of<ExpressionProvider>(context, listen: false).oneStepBackExpression(expressionController);
+                      Provider.of<ExpressionProvider>(functionModel.context, listen: false).oneStepBackExpression(functionModel.expressionController);
                     },
-                    style: elevatedBUttonStyle,
+                    style: functionModel.elevatedBUttonStyle,
                     child: const Icon(Icons.backspace, color: AppColors.primary)))),
         Expanded(
             child: SizedBox(
-                height: 80,
+                height: boxHeight,
                 child: ElevatedButton(
                     onPressed: () {
-                      Provider.of<ExpressionProvider>(context, listen: false)
-                          .updateExpression(operators[4], expressionController, context, resultExpression, isEqualbuttonPressed);
+                      Provider.of<ExpressionProvider>(functionModel.context, listen: false).updateExpression(
+                          operators[4],
+                          functionModel.expressionController,
+                          functionModel.context,
+                          functionModel.resultExpression,
+                          functionModel.isEqualbuttonPressed);
                     },
-                    style: elevatedBUttonStyle,
+                    style: functionModel.elevatedBUttonStyle,
                     child: Text("%", style: AppStyles.text30PxBold.primary)))),
         Expanded(
             child: SizedBox(
                 height: 60,
                 child: ElevatedButton(
                     onPressed: () {
-                      Provider.of<ExpressionProvider>(context, listen: false)
-                          .updateExpression(operators[0], expressionController, context, resultExpression, isEqualbuttonPressed);
+                      Provider.of<ExpressionProvider>(functionModel.context, listen: false).updateExpression(
+                          operators[0],
+                          functionModel.expressionController,
+                          functionModel.context,
+                          functionModel.resultExpression,
+                          functionModel.isEqualbuttonPressed);
                     },
-                    style: elevatedBUttonStyle,
+                    style: functionModel.elevatedBUttonStyle,
                     child: Text("/", style: AppStyles.text30PxBold.primary))))
       ],
     );
   }
 
-  static Row rowSecond(ButtonStyle elevatedBUttonStyle, context, expressionController, resultExpression, isEqualbuttonPressed) {
+  static Row rowSecond(functionmodel) {
     return Row(
       children: [
         Expanded(
             child: SizedBox(
-                height: 80,
+                height: boxHeight,
                 child: ElevatedButton(
                     onPressed: () {
-                      numberPressed(context, numbers[2], expressionController, resultExpression, isEqualbuttonPressed);
+                      numberPressed(functionmodel.context, numbers[2], functionmodel.expressionController, functionmodel.resultExpression,
+                          functionmodel.isEqualbuttonPressed);
                     },
-                    style: elevatedBUttonStyle,
+                    style: functionmodel.elevatedBUttonStyle,
                     child: Text("7", style: AppStyles.text31PxBold)))),
         Expanded(
             child: SizedBox(
-                height: 80,
+                height: boxHeight,
                 child: ElevatedButton(
                     onPressed: () {
-                      numberPressed(context, numbers[1], expressionController, resultExpression, isEqualbuttonPressed);
+                      numberPressed(functionmodel.context, numbers[1], functionmodel.expressionController, functionmodel.resultExpression,
+                          functionmodel.isEqualbuttonPressed);
                     },
-                    style: elevatedBUttonStyle,
+                    style: functionmodel.elevatedBUttonStyle,
                     child: Text("8", style: AppStyles.text31PxBold)))),
         Expanded(
             child: SizedBox(
-                height: 80,
+                height: boxHeight,
                 child: ElevatedButton(
                     onPressed: () {
-                      numberPressed(context, numbers[0], expressionController, resultExpression, isEqualbuttonPressed);
+                      numberPressed(functionmodel.context, numbers[0], functionmodel.expressionController, functionmodel.resultExpression,
+                          functionmodel.isEqualbuttonPressed);
                     },
-                    style: elevatedBUttonStyle,
+                    style: functionmodel.elevatedBUttonStyle,
                     child: Text("9", style: AppStyles.text31PxBold)))),
         Expanded(
             child: SizedBox(
-                height: 80,
+                height: boxHeight,
                 child: ElevatedButton(
                     onPressed: () {
-                      Provider.of<ExpressionProvider>(context, listen: false)
-                          .updateExpression(operators[1], expressionController, context, resultExpression, isEqualbuttonPressed);
+                      Provider.of<ExpressionProvider>(functionmodel.context, listen: false).updateExpression(
+                          operators[1],
+                          functionmodel.expressionController,
+                          functionmodel.context,
+                          functionmodel.resultExpression,
+                          functionmodel.isEqualbuttonPressed);
                     },
-                    style: elevatedBUttonStyle,
+                    style: functionmodel.elevatedBUttonStyle,
                     child: Text("X", style: AppStyles.text30PxBold.primary))))
       ],
     );
   }
 
-  static Row rowThird(ButtonStyle elevatedBUttonStyle, context, expressionController, resultExpression, isEqualbuttonPressed) {
+  static Row rowThird(functionmodel) {
     return Row(
       children: [
         Expanded(
             child: SizedBox(
-                height: 80,
+                height: boxHeight,
                 child: ElevatedButton(
                     onPressed: () {
-                      numberPressed(context, numbers[5], expressionController, resultExpression, isEqualbuttonPressed);
+                      numberPressed(functionmodel.context, numbers[5], functionmodel.expressionController, functionmodel.resultExpression,
+                          functionmodel.isEqualbuttonPressed);
                     },
-                    style: elevatedBUttonStyle,
+                    style: functionmodel.elevatedBUttonStyle,
                     child: Text("4", style: AppStyles.text31PxBold)))),
         Expanded(
             child: SizedBox(
-                height: 80,
+                height: boxHeight,
                 child: ElevatedButton(
                     onPressed: () {
-                      numberPressed(context, numbers[4], expressionController, resultExpression, isEqualbuttonPressed);
+                      numberPressed(functionmodel.context, numbers[4], functionmodel.expressionController, functionmodel.resultExpression,
+                          functionmodel.isEqualbuttonPressed);
                     },
-                    style: elevatedBUttonStyle,
+                    style: functionmodel.elevatedBUttonStyle,
                     child: Text("5", style: AppStyles.text31PxBold)))),
         Expanded(
             child: SizedBox(
-                height: 80,
+                height: boxHeight,
                 child: ElevatedButton(
                     onPressed: () {
-                      numberPressed(context, numbers[3], expressionController, resultExpression, isEqualbuttonPressed);
+                      numberPressed(functionmodel.context, numbers[3], functionmodel.expressionController, functionmodel.resultExpression,
+                          functionmodel.isEqualbuttonPressed);
                     },
-                    style: elevatedBUttonStyle,
+                    style: functionmodel.elevatedBUttonStyle,
                     child: Text("6", style: AppStyles.text31PxBold)))),
         Expanded(
             child: SizedBox(
-                height: 80,
+                height: boxHeight,
                 child: ElevatedButton(
                     onPressed: () {
-                      Provider.of<ExpressionProvider>(context, listen: false)
-                          .updateExpression(operators[2], expressionController, context, resultExpression, isEqualbuttonPressed);
+                      Provider.of<ExpressionProvider>(functionmodel.context, listen: false).updateExpression(
+                          operators[2],
+                          functionmodel.expressionController,
+                          functionmodel.context,
+                          functionmodel.resultExpression,
+                          functionmodel.isEqualbuttonPressed);
                     },
-                    style: elevatedBUttonStyle,
+                    style: functionmodel.elevatedBUttonStyle,
                     child: Text("-", style: AppStyles.text30PxBold.primary))))
       ],
     );
   }
 
-  static Row rowFourth(ButtonStyle elevatedBUttonStyle, context, expressionController, resultExpression, isEqualbuttonPressed) {
+  static Row rowFourth(functionmodel) {
     return Row(
       children: [
         Expanded(
             child: SizedBox(
-                height: 80,
+                height: boxHeight,
                 child: ElevatedButton(
                     onPressed: () {
-                      numberPressed(context, numbers[8], expressionController, resultExpression, isEqualbuttonPressed);
+                      numberPressed(functionmodel.context, numbers[8], functionmodel.expressionController, functionmodel.resultExpression,
+                          functionmodel.isEqualbuttonPressed);
                     },
-                    style: elevatedBUttonStyle,
+                    style: functionmodel.elevatedBUttonStyle,
                     child: Text("1", style: AppStyles.text31PxBold)))),
         Expanded(
             child: SizedBox(
-                height: 80,
+                height: boxHeight,
                 child: ElevatedButton(
                     onPressed: () {
-                      numberPressed(context, numbers[7], expressionController, resultExpression, isEqualbuttonPressed);
+                      numberPressed(functionmodel.context, numbers[7], functionmodel.expressionController, functionmodel.resultExpression,
+                          functionmodel.isEqualbuttonPressed);
                     },
-                    style: elevatedBUttonStyle,
+                    style: functionmodel.elevatedBUttonStyle,
                     child: Text("2", style: AppStyles.text31PxBold)))),
         Expanded(
             child: SizedBox(
-                height: 80,
+                height: boxHeight,
                 child: ElevatedButton(
                     onPressed: () {
-                      numberPressed(context, numbers[6], expressionController, resultExpression, isEqualbuttonPressed);
+                      numberPressed(functionmodel.context, numbers[6], functionmodel.expressionController, functionmodel.resultExpression,
+                          functionmodel.isEqualbuttonPressed);
                     },
-                    style: elevatedBUttonStyle,
+                    style: functionmodel.elevatedBUttonStyle,
                     child: Text("3", style: AppStyles.text31PxBold)))),
         Expanded(
             child: SizedBox(
-                height: 80,
+                height: boxHeight,
                 child: ElevatedButton(
                     onPressed: () {
-                      Provider.of<ExpressionProvider>(context, listen: false)
-                          .updateExpression(operators[3], expressionController, context, resultExpression, isEqualbuttonPressed);
+                      Provider.of<ExpressionProvider>(functionmodel.context, listen: false).updateExpression(
+                          operators[3],
+                          functionmodel.expressionController,
+                          functionmodel.context,
+                          functionmodel.resultExpression,
+                          functionmodel.isEqualbuttonPressed);
                     },
-                    style: elevatedBUttonStyle,
+                    style: functionmodel.elevatedBUttonStyle,
                     child: Text("+", style: AppStyles.text31PxBold.primary))))
       ],
     );
   }
 
-  static Row rowFifth(ButtonStyle elevatedBUttonStyle, context, expressionController, resultExpression, isEqualbuttonPressed) {
+  static Row rowFifth(functionModel) {
     return Row(
       children: [
-        Expanded(child: SizedBox(height: 80, child: ElevatedButton(onPressed: () {}, style: elevatedBUttonStyle, child: const Icon(Icons.copy)))),
         Expanded(
             child: SizedBox(
-                height: 80,
+                height: boxHeight, child: ElevatedButton(onPressed: () {}, style: functionModel.elevatedBUttonStyle, child: const Icon(Icons.copy)))),
+        Expanded(
+            child: SizedBox(
+                height: boxHeight,
                 child: ElevatedButton(
                     onPressed: () {
-                      Provider.of<ExpressionProvider>(context, listen: false)
-                          .updateExpression("0", expressionController, context, resultExpression, isEqualbuttonPressed);
+                      Provider.of<ExpressionProvider>(functionModel.context, listen: false).updateExpression("0", functionModel.expressionController,
+                          functionModel.context, functionModel.resultExpression, functionModel.isEqualbuttonPressed);
                     },
-                    style: elevatedBUttonStyle,
+                    style: functionModel.elevatedBUttonStyle,
                     child: Text("0", style: AppStyles.text31PxBold)))),
         Expanded(
             child: SizedBox(
-                height: 80,
+                height: boxHeight,
                 child: ElevatedButton(
                     onPressed: () {
-                      numberPressed(context, numbers[9], expressionController, resultExpression, isEqualbuttonPressed);
+                      numberPressed(functionModel.context, numbers[9], functionModel.expressionController, functionModel.resultExpression,
+                          functionModel.isEqualbuttonPressed);
                     },
-                    style: elevatedBUttonStyle,
+                    style: functionModel.elevatedBUttonStyle,
                     child: Text(".", style: AppStyles.text31PxBold)))),
         Expanded(
             child: SizedBox(
-                height: 80,
+                height: boxHeight,
                 child: ElevatedButton(
                     onPressed: () {
-                      ResultManager.resultManagerEqualButton(context, expressionController, resultExpression);
+                      ResultManager.resultManagerEqualButton(
+                          functionModel.context, functionModel.expressionController, functionModel.resultExpression);
                     },
-                    style: elevatedBUttonStyle,
+                    style: functionModel.elevatedBUttonStyle,
                     child: ElevatedButton(
                         onPressed: () {
-                          ResultManager.resultManagerEqualButton(context, expressionController, resultExpression);
+                          ResultManager.resultManagerEqualButton(
+                              functionModel.context, functionModel.expressionController, functionModel.resultExpression);
                         },
-                        style: elevatedBUttonStyle,
+                        style: functionModel.elevatedBUttonStyle,
                         child: const Icon(Icons.dehaze)))))
       ],
     );

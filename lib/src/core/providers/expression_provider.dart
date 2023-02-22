@@ -27,8 +27,15 @@ class ExpressionProvider extends ChangeNotifier {
     }
 
     // If % button is pressed while not any operator is pressed
-
-    if (value == "%" && !_expression.contains("/") && !_expression.contains("*") && !_expression.contains("+") && !_expression.contains("-")) {
+    if (_expression == "") {
+      if (value == "%") {}
+    }
+    if (value == "%" &&
+        !_expression.contains("/") &&
+        !_expression.contains("*") &&
+        !_expression.contains("+") &&
+        !_expression.contains("-") &&
+        _expression != "") {
       String percentExpression = controller.text;
       var finalPercentExpression = int.parse(percentExpression);
       var finalAnswer = finalPercentExpression / 100;
@@ -86,6 +93,8 @@ class ExpressionProvider extends ChangeNotifier {
             }
           }
         } else {
+          //If there is double point in an expression
+
           // If user tried to press double operator
           if (value.endsWith("/") || value.endsWith("*") || value.endsWith("+") || value.endsWith("-")) {
             if (_expression.endsWith("/") || _expression.endsWith("*") || _expression.endsWith("+") || _expression.endsWith("-")) {
@@ -96,8 +105,11 @@ class ExpressionProvider extends ChangeNotifier {
           if (_expression.length >= 40) {
             _expression = _expression;
           } else {
+            // If user tried to press double operator
+
             controller.text = controller.text + value;
             _expression = controller.text;
+
             ResultManager.resultManagerNormalButton(context, controller, resultController);
           }
         }

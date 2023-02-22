@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scientific_calculato/src/app/buttongrid/button_grid.dart';
+import 'package:scientific_calculato/src/app/buttongrid/model/functionmodel.dart';
 import 'package:scientific_calculato/src/core/extensions/colors_extension.dart';
+import 'package:scientific_calculato/src/core/providers/extrabutton_provider.dart';
 import 'package:scientific_calculato/src/core/providers/history_provider.dart';
 import 'package:scientific_calculato/src/core/providers/result_provider.dart';
 import 'package:scientific_calculato/src/core/themes/appcolors.dart';
@@ -17,6 +19,16 @@ class HomepageScreen extends StatelessWidget {
     var elevatedButtonStyle = ElevatedButton.styleFrom(backgroundColor: Colors.transparent, elevation: 0);
     var historyList = Provider.of<HistoryProvider>(context, listen: true).historyGetter;
     var isEqualButtonPressed = Provider.of<ResultProvider>(context, listen: true).isEqualPressed;
+    var extraButtonpressed = Provider.of<ExtrabuttonProvider>(context, listen: true).getExtraButton;
+
+    FunctionModel model = FunctionModel();
+
+    model.elevatedBUttonStyle = elevatedButtonStyle;
+    model.context = context;
+    model.expressionController = expression;
+    model.isEqualbuttonPressed = isEqualButtonPressed;
+    model.resultExpression = result;
+    model.extraButtonPressed = extraButtonpressed;
 
     return Scaffold(
         backgroundColor: AppColors.black,
@@ -77,25 +89,21 @@ class HomepageScreen extends StatelessWidget {
                   )
                 ],
               ),
-              const Divider(height: 5, thickness: 0.5),
               //First Row "C" "Wrong" "Percent" "Divide"
-              ButtonGrid.rowFirst(elevatedButtonStyle, context, expression, result, isEqualButtonPressed),
-              const Divider(height: 5, thickness: 0.5),
+              ButtonGrid.rowFirst(model),
 
               //First Row "7" "8" "9" "multiply"
-              ButtonGrid.rowSecond(elevatedButtonStyle, context, expression, result, isEqualButtonPressed),
-              const Divider(height: 5, thickness: 0.5),
+              ButtonGrid.rowSecond(model),
 
               //First Row "4" "5" "6" "minus"
-              ButtonGrid.rowThird(elevatedButtonStyle, context, expression, result, isEqualButtonPressed),
-              const Divider(height: 5, thickness: 0.5),
+              ButtonGrid.rowThird(model),
 
               //First Row "1" "2" "3" "Divide"
-              ButtonGrid.rowFourth(elevatedButtonStyle, context, expression, result, isEqualButtonPressed),
+              ButtonGrid.rowFourth(model),
               const Divider(height: 5, thickness: 0.5),
 
               //First Row "" "0" "." "equals"
-              ButtonGrid.rowFifth(elevatedButtonStyle, context, expression, result, isEqualButtonPressed),
+              ButtonGrid.rowFifth(model),
               const Divider(height: 5, thickness: 0.5),
             ],
           ),
